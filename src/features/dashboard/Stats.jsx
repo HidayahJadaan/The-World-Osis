@@ -1,53 +1,53 @@
 import {
-  HiOutlineBanknotes,
   HiOutlineBriefcase,
   HiOutlineCalendarDays,
+  HiOutlineBanknotes,
   HiOutlineChartBar,
-} from "react-icons/hi2";
-import Stat from "./Stat";
-import { formatCurrency } from "../../utils/helpers";
+} from 'react-icons/hi2';
+import { formatCurrency } from 'utils/helpers';
+import Stat from './Stat';
 
 function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
-  // 1.
+  // Stat 1)
   const numBookings = bookings.length;
 
-  // 2.
+  // Stat 2)
   const sales = bookings.reduce((acc, cur) => acc + cur.totalPrice, 0);
 
-  // 3.
+  // Stat 3)
   const checkins = confirmedStays.length;
 
-  // 4.
+  // Stat 4)
+  // We will use a trick to calculate occupancy rate. It's not 100% accurate, but we want to keep it simple. We know we can have a total of 'numDays * cabinCount' days to occupy, and we also know how many days were actually booked. From this, we can compute the percentage
   const occupation =
     confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) /
     (numDays * cabinCount);
-  // num checked in nights / all available nights (num days * num cabins)
 
   return (
     <>
       <Stat
-        title="Bookings"
-        color="blue"
         icon={<HiOutlineBriefcase />}
+        title='Bookings'
         value={numBookings}
+        color='blue'
       />
       <Stat
-        title="Sales"
-        color="green"
         icon={<HiOutlineBanknotes />}
+        title='Sales'
         value={formatCurrency(sales)}
+        color='green'
       />
       <Stat
-        title="Check ins"
-        color="indigo"
         icon={<HiOutlineCalendarDays />}
+        title='Check ins'
         value={checkins}
+        color='indigo'
       />
       <Stat
-        title="Occupancy rate"
-        color="yellow"
         icon={<HiOutlineChartBar />}
-        value={Math.round(occupation * 100) + "%"}
+        title='Occupancy rate'
+        value={Math.round(occupation * 100) + '%'}
+        color='yellow'
       />
     </>
   );
